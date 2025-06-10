@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ job.get('job_title', 'Job Detail') }} - JobFinder Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --success-color: #059669;
+            --success-dark: #047857;
+            --background-color: #f8fafc;
+            --card-background: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-color) !important;
+        }
+
+        .back-button {
+            background: var(--card-background);
+            border: 2px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .back-button:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .job-header {
+            background: var(--card-background);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .job-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .company-name {
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .job-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .meta-icon {
+            color: var(--primary-color);
+            font-size: 1.125rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .meta-label {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .meta-value {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .apply-button {
+            background: var(--success-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.125rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .apply-button:hover {
+            background: var(--success-dark);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .content-section {
+            background: var(--card-background);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-icon {
+            color: var(--primary-color);
+            font-size: 1.25rem;
+        }
+
+        .highlight-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .highlight-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .highlight-item:last-child {
+            border-bottom: none;
+        }
+
+        .highlight-bullet {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-top: 0.125rem;
+        }
+
+        .job-description {
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            color: var(--text-primary);
+        }
+
+        .empty-section {
+            text-align: center;
+            color: var(--text-secondary);
+            font-style: italic;
+            padding: 2rem;
+        }
+
+        .insights-section {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(5, 150, 105, 0.05) 100%);
+            border: 1px solid rgba(37, 99, 235, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .insights-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .insight-category {
+            background: white;
+            border-radius: 8px;
+            padding: 1.25rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .insight-category-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .insight-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .insight-tag {
+            background: rgba(5, 150, 105, 0.1);
+            color: var(--success-color);
+            padding: 0.375rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border: 1px solid rgba(5, 150, 105, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .job-title {
+                font-size: 1.5rem;
+            }
+            
+            .company-name {
+                font-size: 1.125rem;
+            }
+            
+            .job-header,
+            .content-section {
+                padding: 1.5rem;
+            }
+            
+            .job-meta-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .apply-button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .sticky-apply {
+            position: sticky;
+            top: 2rem;
+            z-index: 10;
+        }
+
+        .apply-card {
+            background: var(--card-background);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+
+        .apply-card h5 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-briefcase me-2"></i>JobFinder Pro
+            </a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <a href="javascript:history.back()" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Back to Results
+        </a>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="job-header">
+                    <h1 class="job-title">{{ job.get('job_title', 'Job Title Not Available') }}</h1>
+                    <div class="company-name">
+                        <i class="fas fa-building me-2"></i>
+                        {{ job.get('employer_name', 'Company Name Not Available') }}
+                    </div>
+                    
+                    <div class="job-meta-grid">
+                        <div class="meta-item">
+                            <i class="fas fa-map-marker-alt meta-icon"></i>
+                            <div>
+                                <div class="meta-label">Location</div>
+                                <div class="meta-value">{{ job.get('job_location', 'Not specified') }}</div>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-clock meta-icon"></i>
+                            <div>
+                                <div class="meta-label">Employment Type</div>
+                                <div class="meta-value">{{ job.get('job_employment_type', 'Not specified') }}</div>
+                            </div>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-calendar-alt meta-icon"></i>
+                            <div>
+                                <div class="meta-label">Posted Date</div>
+                                <div class="meta-value">
+                                    {{ job.get('job_posted_at', 'Not specified')[:10] if job.get('job_posted_at') else 'Not specified' }}
+                                </div>
+                            </div>
+                        </div>
+                        {% if job.get('job_salary') %}
+                        <div class="meta-item">
+                            <i class="fas fa-dollar-sign meta-icon"></i>
+                            <div>
+                                <div class="meta-label">Salary</div>
+                                <div class="meta-value">{{ job.get('job_salary') }}</div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- AI-Powered Insights Section -->
+                {% if job.get('key_responsibilities') or job.get('key_qualifications') %}
+                <div class="insights-section">
+                    <div class="insights-title">
+                        <i class="fas fa-brain"></i>
+                        AI-Powered Job Insights
+                    </div>
+                    <div class="insights-grid">
+                        {% if job.get('key_responsibilities') %}
+                        <div class="insight-category">
+                            <div class="insight-category-title">
+                                <i class="fas fa-tasks"></i>
+                                Key Responsibilities
+                            </div>
+                            <div class="insight-tags">
+                                {% for insight in job.get('key_responsibilities', []) %}
+                                <span class="insight-tag">{{ insight }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if job.get('key_qualifications') %}
+                        <div class="insight-category">
+                            <div class="insight-category-title">
+                                <i class="fas fa-graduation-cap"></i>
+                                Key Qualifications
+                            </div>
+                            <div class="insight-tags">
+                                {% for insight in job.get('key_qualifications', []) %}
+                                <span class="insight-tag">{{ insight }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if job.get('job_highlights', {}).get('Responsibilities') %}
+                <div class="content-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-tasks section-icon"></i>
+                        Key Responsibilities
+                    </h2>
+                    <ul class="highlight-list">
+                        {% for item in job.get('job_highlights', {}).get('Responsibilities', []) %}
+                        <li class="highlight-item">
+                            <span class="highlight-bullet">•</span>
+                            <span>{{ item }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if job.get('job_highlights', {}).get('Qualifications') %}
+                <div class="content-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-graduation-cap section-icon"></i>
+                        Required Qualifications
+                    </h2>
+                    <ul class="highlight-list">
+                        {% for item in job.get('job_highlights', {}).get('Qualifications', []) %}
+                        <li class="highlight-item">
+                            <span class="highlight-bullet">•</span>
+                            <span>{{ item }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if job.get('job_highlights', {}).get('Benefits') %}
+                <div class="content-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-gift section-icon"></i>
+                        Benefits & Perks
+                    </h2>
+                    <ul class="highlight-list">
+                        {% for item in job.get('job_highlights', {}).get('Benefits', []) %}
+                        <li class="highlight-item">
+                            <span class="highlight-bullet">•</span>
+                            <span>{{ item }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <div class="content-section">
+                    <h2 class="section-title">
+                        <i class="fas fa-file-alt section-icon"></i>
+                        Full Job Description
+                    </h2>
+                    {% if job.get('job_description') %}
+                        <div class="job-description">{{ job.get('job_description') }}</div>
+                    {% else %}
+                        <div class="empty-section">
+                            <i class="fas fa-info-circle me-2"></i>
+                            No detailed description available for this position.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="sticky-apply">
+                    <div class="apply-card">
+                        <h5>Ready to Apply?</h5>
+                        <p class="text-muted mb-3">Take the next step in your career journey</p>
+                        {% if job.get('job_apply_link') %}
+                            <a href="{{ job.get('job_apply_link') }}" class="apply-button" target="_blank">
+                                <i class="fas fa-external-link-alt"></i>
+                                Apply Now
+                            </a>
+                        {% else %}
+                            <div class="text-muted">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                Application link not available
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-white border-top mt-5 py-4">
+        <div class="container text-center">
+            <p class="text-muted mb-0">
+                &copy; 2024 JobFinder Pro. AI-powered job search with advanced insights.
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
