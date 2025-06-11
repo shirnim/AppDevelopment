@@ -18,6 +18,8 @@ dependencies:
   shimmer: ^3.0.0
   cached_network_image: ^3.3.0
   flutter_svg: ^2.0.9
+  sqflite: ^2.3.0
+  path_provider: ^2.1.1
   cupertino_icons: ^1.0.6
 
 dev_dependencies:
@@ -33,24 +35,24 @@ flutter:
     - assets/images/
     - assets/icons/
     
-  # Custom fonts (optional - using Inter from Google Fonts)
-  fonts:
-    - family: Inter
-      fonts:
-        - asset: fonts/Inter-Regular.ttf
-          weight: 400
-        - asset: fonts/Inter-Medium.ttf
-          weight: 500
-        - asset: fonts/Inter-SemiBold.ttf
-          weight: 600
-        - asset: fonts/Inter-Bold.ttf
-          weight: 700
+  # Custom fonts (commented out until font files are added)
+  # fonts:
+  #   - family: Inter
+  #     fonts:
+  #       - asset: fonts/Inter-Regular.ttf
+  #         weight: 400
+  #       - asset: fonts/Inter-Medium.ttf
+  #         weight: 500
+  #       - asset: fonts/Inter-SemiBold.ttf
+  #         weight: 600
+  #       - asset: fonts/Inter-Bold.ttf
+  #         weight: 700
 
-# App icon configuration
-flutter_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/icons/app_icon.png"
-  min_sdk_android: 21
-  adaptive_icon_background: "#2563EB"
-  adaptive_icon_foreground: "assets/icons/app_icon_foreground.png"
+# App icon configuration (commented out until icon files are added)
+# flutter_icons:
+#   android: "launcher_icon"
+#   ios: true
+#   image_path: "assets/icons/app_icon.png"
+#   min_sdk_android: 21
+#   adaptive_icon_background: "#2563EB"
+#   adaptive_icon_foreground: "assets/icons/app_icon_foreground.png"
