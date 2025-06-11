@@ -41,55 +41,100 @@ class _SearchScreenState extends State<SearchScreen> {
                   // App Bar
                   Padding(
                     padding: const EdgeInsets.all(16),
-                    child: Row(
+                    child: Column(
                       children: [
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: AppTheme.primaryColor.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: const Icon(
-                            Icons.work_rounded,
-                            color: AppTheme.primaryColor,
-                            size: 24,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'JobFinder Pro',
-                                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  color: AppTheme.primaryColor,
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                gradient: AppTheme.primaryGradient,
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: AppTheme.cardShadow,
+                              ),
+                              child: const Icon(
+                                Icons.work_rounded,
+                                color: Colors.white,
+                                size: 28,
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'CareerLens Pro',
+                                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                                      fontWeight: FontWeight.w800,
+                                      color: AppTheme.textPrimary,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Professional Job Search Platform',
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      color: AppTheme.textSecondary,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: _showFilters 
+                                    ? AppTheme.primaryColor.withOpacity(0.1)
+                                    : AppTheme.backgroundColor,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: _showFilters 
+                                      ? AppTheme.primaryColor 
+                                      : AppTheme.borderColor,
                                 ),
                               ),
-                              Text(
-                                'Find your dream job',
-                                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                  color: AppTheme.textTertiary,
+                              child: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _showFilters = !_showFilters;
+                                  });
+                                },
+                                icon: Icon(
+                                  _showFilters ? Icons.filter_list_off_rounded : Icons.tune_rounded,
+                                  color: _showFilters ? AppTheme.primaryColor : AppTheme.textSecondary,
+                                ),
+                                tooltip: _showFilters ? 'Hide Filters' : 'Show Filters',
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: AppTheme.primaryColor.withOpacity(0.05),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: AppTheme.primaryColor.withOpacity(0.2),
+                            ),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.info_outline_rounded,
+                                color: AppTheme.primaryColor,
+                                size: 18,
+                              ),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  'Aggregating jobs from multiple professional platforms and career websites',
+                                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: AppTheme.primaryColor,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ],
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _showFilters = !_showFilters;
-                            });
-                          },
-                          icon: Icon(
-                            _showFilters ? Icons.filter_list_off_rounded : Icons.tune_rounded,
-                            color: _showFilters ? AppTheme.primaryColor : AppTheme.textSecondary,
-                          ),
-                          style: IconButton.styleFrom(
-                            backgroundColor: _showFilters 
-                                ? AppTheme.primaryColor.withOpacity(0.1)
-                                : Colors.transparent,
                           ),
                         ),
                       ],

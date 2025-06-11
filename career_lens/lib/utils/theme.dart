@@ -48,6 +48,19 @@ class AppTheme {
     ),
   ];
 
+  static const List<BoxShadow> professionalShadow = [
+    BoxShadow(
+      color: Color(0x08000000),
+      blurRadius: 16,
+      offset: Offset(0, 6),
+    ),
+    BoxShadow(
+      color: Color(0x04000000),
+      blurRadius: 4,
+      offset: Offset(0, 2),
+    ),
+  ];
+
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     colorScheme: ColorScheme.fromSeed(

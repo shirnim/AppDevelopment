@@ -22,12 +22,12 @@ class _MainScreenState extends State<MainScreen> {
     const BottomNavigationBarItem(
       icon: Icon(Icons.search_rounded),
       activeIcon: Icon(Icons.search_rounded),
-      label: 'Search Jobs',
+      label: 'Job Search',
     ),
     const BottomNavigationBarItem(
       icon: Icon(Icons.analytics_outlined),
       activeIcon: Icon(Icons.analytics_rounded),
-      label: 'Analytics',
+      label: 'Market Analytics',
     ),
   ];
 
