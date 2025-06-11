@@ -12,27 +12,42 @@ class JobCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 16),
-      child: InkWell(
-        onTap: () => _navigateToJobDetail(context),
-        borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildJobHeader(context),
-              const SizedBox(height: 12),
-              _buildJobMeta(context),
-              if (job.keyResponsibilities.isNotEmpty ||
-                  job.keyQualifications.isNotEmpty) ...[
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: AppTheme.cardColor,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppTheme.borderColor),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x05000000),
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () => _navigateToJobDetail(context),
+          borderRadius: BorderRadius.circular(16),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildJobHeader(context),
                 const SizedBox(height: 16),
-                _buildInsights(context),
+                _buildJobMeta(context),
+                if (job.keyResponsibilities.isNotEmpty ||
+                    job.keyQualifications.isNotEmpty) ...[
+                  const SizedBox(height: 16),
+                  _buildInsights(context),
+                ],
+                const SizedBox(height: 20),
+                _buildActionButtons(context),
               ],
-              const SizedBox(height: 16),
-              _buildActionButtons(context),
-            ],
+            ),
           ),
         ),
       ),
@@ -40,28 +55,42 @@ class JobCard extends StatelessWidget {
   }
 
   Widget _buildJobHeader(BuildContext context) {
-    return Column(
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          job.jobTitle ?? 'No Title',
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-            fontWeight: FontWeight.w600,
+        // Company Logo Placeholder
+        Container(
+          width: 48,
+          height: 48,
+          decoration: BoxDecoration(
+            color: AppTheme.primaryColor.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(12),
           ),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+          child: const Icon(
+            Icons.business_rounded,
+            color: AppTheme.primaryColor,
+            size: 24,
+          ),
         ),
-        const SizedBox(height: 4),
-        Row(
-          children: [
-            Icon(
-              Icons.business,
-              color: AppTheme.primaryColor,
-              size: 16,
-            ),
-            const SizedBox(width: 4),
-            Expanded(
-              child: Text(
+        
+        const SizedBox(width: 16),
+        
+        // Job Info
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                job.jobTitle ?? 'No Title',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  height: 1.2,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 4),
+              Text(
                 job.employerName ?? 'Unknown Company',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   color: AppTheme.primaryColor,
@@ -70,8 +99,25 @@ class JobCard extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
+            ],
+          ),
+        ),
+        
+        // Bookmark Icon
+        IconButton(
+          onPressed: () {
+            // TODO: Implement bookmark functionality
+          },
+          icon: const Icon(
+            Icons.bookmark_border_rounded,
+            color: AppTheme.textTertiary,
+          ),
+          style: IconButton.styleFrom(
+            backgroundColor: AppTheme.backgroundColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
             ),
-          ],
+          ),
         ),
       ],
     );
@@ -85,19 +131,19 @@ class JobCard extends StatelessWidget {
         if (job.jobLocation != null)
           _buildMetaItem(
             context,
-            Icons.location_on,
+            Icons.location_on_outlined,
             job.jobLocation!,
           ),
         if (job.jobEmploymentType != null)
           _buildMetaItem(
             context,
-            Icons.work,
+            Icons.work_outline_rounded,
             job.jobEmploymentType!,
           ),
         if (job.jobPostedAt != null)
           _buildMetaItem(
             context,
-            Icons.calendar_today,
+            Icons.schedule_rounded,
             _formatDate(job.jobPostedAt!),
           ),
       ],
@@ -110,14 +156,15 @@ class JobCard extends StatelessWidget {
       children: [
         Icon(
           icon,
-          color: AppTheme.primaryColor,
-          size: 14,
+          color: AppTheme.textTertiary,
+          size: 16,
         ),
         const SizedBox(width: 4),
         Text(
           text,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
             color: AppTheme.textSecondary,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ],
@@ -125,23 +172,52 @@ class JobCard extends StatelessWidget {
   }
 
   Widget _buildInsights(BuildContext context) {
-    return Column(
-      children: [
-        if (job.keyResponsibilities.isNotEmpty)
-          InsightChips(
-            title: 'Key Responsibilities',
-            icon: Icons.task_alt,
-            insights: job.keyResponsibilities.take(3).toList(),
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppTheme.primaryColor.withOpacity(0.03),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: AppTheme.primaryColor.withOpacity(0.1),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                Icons.psychology_rounded,
+                color: AppTheme.primaryColor,
+                size: 16,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                'AI Insights',
+                style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                  color: AppTheme.primaryColor,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
           ),
-        if (job.keyResponsibilities.isNotEmpty && job.keyQualifications.isNotEmpty)
-          const SizedBox(height: 8),
-        if (job.keyQualifications.isNotEmpty)
-          InsightChips(
-            title: 'Key Qualifications',
-            icon: Icons.school,
-            insights: job.keyQualifications.take(3).toList(),
-          ),
-      ],
+          const SizedBox(height: 12),
+          if (job.keyResponsibilities.isNotEmpty)
+            InsightChips(
+              title: 'Key Responsibilities',
+              icon: Icons.task_alt_rounded,
+              insights: job.keyResponsibilities.take(3).toList(),
+            ),
+          if (job.keyResponsibilities.isNotEmpty && job.keyQualifications.isNotEmpty)
+            const SizedBox(height: 8),
+          if (job.keyQualifications.isNotEmpty)
+            InsightChips(
+              title: 'Key Qualifications',
+              icon: Icons.school_rounded,
+              insights: job.keyQualifications.take(3).toList(),
+            ),
+        ],
+      ),
     );
   }
 
@@ -149,34 +225,26 @@ class JobCard extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: OutlinedButton(
+          child: OutlinedButton.icon(
             onPressed: () => _navigateToJobDetail(context),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.visibility, size: 16),
-                SizedBox(width: 4),
-                Text('View Details'),
-              ],
+            icon: const Icon(Icons.visibility_outlined, size: 18),
+            label: const Text('View Details'),
+            style: OutlinedButton.styleFrom(
+              padding: const EdgeInsets.symmetric(vertical: 12),
             ),
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: ElevatedButton(
+          child: ElevatedButton.icon(
             onPressed: job.jobApplyLink != null
                 ? () => _launchUrl(job.jobApplyLink!)
                 : null,
+            icon: const Icon(Icons.open_in_new_rounded, size: 18),
+            label: const Text('Apply'),
             style: ElevatedButton.styleFrom(
               backgroundColor: AppTheme.successColor,
-            ),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.open_in_new, size: 16, color: Colors.white),
-                SizedBox(width: 4),
-                Text('Apply', style: TextStyle(color: Colors.white)),
-              ],
+              padding: const EdgeInsets.symmetric(vertical: 12),
             ),
           ),
         ),
@@ -205,6 +273,9 @@ class JobCard extends StatelessWidget {
         return 'Yesterday';
       } else if (difference < 7) {
         return '$difference days ago';
+      } else if (difference < 30) {
+        final weeks = (difference / 7).floor();
+        return '$weeks week${weeks > 1 ? 's' : ''} ago';
       } else {
         return '${date.day}/${date.month}/${date.year}';
       }

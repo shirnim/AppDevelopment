@@ -18,10 +18,10 @@ class ActiveFilters extends StatelessWidget {
 
         return Container(
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppTheme.cardBackground,
+          decoration: const BoxDecoration(
+            color: AppTheme.surfaceColor,
             border: Border(
-              bottom: BorderSide(color: AppTheme.borderColor),
+              bottom: BorderSide(color: AppTheme.dividerColor),
             ),
           ),
           child: Column(
@@ -30,15 +30,27 @@ class ActiveFilters extends StatelessWidget {
               Row(
                 children: [
                   Icon(
-                    Icons.filter_list,
+                    Icons.filter_list_rounded,
                     color: AppTheme.primaryColor,
                     size: 16,
                   ),
-                  const SizedBox(width: 4),
+                  const SizedBox(width: 6),
                   Text(
-                    'Active Filters:',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    'Active Filters',
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
                       fontWeight: FontWeight.w600,
+                      color: AppTheme.primaryColor,
+                    ),
+                  ),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () {
+                      provider.clearSearch();
+                    },
+                    child: const Text('Clear All'),
+                    style: TextButton.styleFrom(
+                      foregroundColor: AppTheme.textSecondary,
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
                     ),
                   ),
                 ],
@@ -46,31 +58,35 @@ class ActiveFilters extends StatelessWidget {
               const SizedBox(height: 8),
               Wrap(
                 spacing: 8,
-                runSpacing: 4,
+                runSpacing: 8,
                 children: [
                   if (filters.location.isNotEmpty)
                     _buildFilterChip(
                       context,
-                      Icons.location_on,
+                      Icons.location_on_outlined,
                       filters.location,
+                      () => _removeLocationFilter(context),
                     ),
                   if (filters.jobType.isNotEmpty)
                     _buildFilterChip(
                       context,
-                      Icons.work,
+                      Icons.work_outline_rounded,
                       _getJobTypeLabel(filters.jobType),
+                      () => _removeJobTypeFilter(context),
                     ),
                   if (filters.experienceLevel.isNotEmpty)
                     _buildFilterChip(
                       context,
-                      Icons.school,
+                      Icons.school_outlined,
                       _getExperienceLevelLabel(filters.experienceLevel),
+                      () => _removeExperienceLevelFilter(context),
                     ),
                   if (filters.datePosted.isNotEmpty)
                     _buildFilterChip(
                       context,
-                      Icons.calendar_today,
+                      Icons.schedule_rounded,
                       _getDatePostedLabel(filters.datePosted),
+                      () => _removeDatePostedFilter(context),
                     ),
                 ],
               ),
@@ -81,7 +97,12 @@ class ActiveFilters extends StatelessWidget {
     );
   }
 
-  Widget _buildFilterChip(BuildContext context, IconData icon, String label) {
+  Widget _buildFilterChip(
+    BuildContext context,
+    IconData icon,
+    String label,
+    VoidCallback onRemove,
+  ) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
@@ -107,9 +128,42 @@ class ActiveFilters extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
+          const SizedBox(width: 4),
+          GestureDetector(
+            onTap: onRemove,
+            child: Icon(
+              Icons.close_rounded,
+              color: AppTheme.primaryColor,
+              size: 16,
+            ),
+          ),
         ],
       ),
     );
+  }
+
+  void _removeLocationFilter(BuildContext context) {
+    final provider = context.read<JobProvider>();
+    final filters = provider.filters.copyWith(location: '');
+    provider.updateFilters(filters);
+  }
+
+  void _removeJobTypeFilter(BuildContext context) {
+    final provider = context.read<JobProvider>();
+    final filters = provider.filters.copyWith(jobType: '');
+    provider.updateFilters(filters);
+  }
+
+  void _removeExperienceLevelFilter(BuildContext context) {
+    final provider = context.read<JobProvider>();
+    final filters = provider.filters.copyWith(experienceLevel: '');
+    provider.updateFilters(filters);
+  }
+
+  void _removeDatePostedFilter(BuildContext context) {
+    final provider = context.read<JobProvider>();
+    final filters = provider.filters.copyWith(datePosted: '');
+    provider.updateFilters(filters);
   }
 
   String _getJobTypeLabel(String jobType) {

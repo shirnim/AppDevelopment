@@ -24,15 +24,15 @@ class InsightChips extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: AppTheme.primaryColor,
-              size: 16,
+              color: AppTheme.successColor,
+              size: 14,
             ),
             const SizedBox(width: 4),
             Text(
               title,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                 fontWeight: FontWeight.w600,
-                color: AppTheme.textPrimary,
+                color: AppTheme.textSecondary,
               ),
             ),
           ],
@@ -41,10 +41,23 @@ class InsightChips extends StatelessWidget {
         Wrap(
           spacing: 6,
           runSpacing: 4,
-          children: insights.map((insight) => Chip(
-            label: Text(insight),
-            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            visualDensity: VisualDensity.compact,
+          children: insights.map((insight) => Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            decoration: BoxDecoration(
+              color: AppTheme.successColor.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: AppTheme.successColor.withOpacity(0.2),
+              ),
+            ),
+            child: Text(
+              insight,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: AppTheme.successColor,
+                fontWeight: FontWeight.w500,
+                fontSize: 11,
+              ),
+            ),
           )).toList(),
         ),
       ],
