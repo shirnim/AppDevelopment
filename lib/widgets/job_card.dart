@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:job_finder_pro/models/job.dart';
 import 'package:job_finder_pro/screens/job_detail_screen.dart';
 import 'package:job_finder_pro/utils/theme.dart';
@@ -58,20 +59,8 @@ class JobCard extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Company Logo Placeholder
-        Container(
-          width: 48,
-          height: 48,
-          decoration: BoxDecoration(
-            color: AppTheme.primaryColor.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: const Icon(
-            Icons.business_rounded,
-            color: AppTheme.primaryColor,
-            size: 24,
-          ),
-        ),
+        // Company Logo
+        _buildCompanyLogo(),
         
         const SizedBox(width: 16),
         
@@ -107,6 +96,16 @@ class JobCard extends StatelessWidget {
         IconButton(
           onPressed: () {
             // TODO: Implement bookmark functionality
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: const Text('Bookmark feature coming soon!'),
+                backgroundColor: AppTheme.primaryColor,
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            );
           },
           icon: const Icon(
             Icons.bookmark_border_rounded,
@@ -120,6 +119,50 @@ class JobCard extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildCompanyLogo() {
+    // Try to load company logo from assets or use placeholder
+    final companyName = job.employerName?.toLowerCase().replaceAll(' ', '_') ?? 'default';
+    final logoPath = 'assets/images/companies/$companyName.png';
+    
+    return Container(
+      width: 48,
+      height: 48,
+      decoration: BoxDecoration(
+        color: AppTheme.primaryColor.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: AppTheme.borderColor,
+          width: 1,
+        ),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(11),
+        child: Image.asset(
+          logoPath,
+          width: 48,
+          height: 48,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            // Fallback to icon if image not found
+            return Container(
+              width: 48,
+              height: 48,
+              decoration: BoxDecoration(
+                color: AppTheme.primaryColor.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(11),
+              ),
+              child: Icon(
+                Icons.business_rounded,
+                color: AppTheme.primaryColor,
+                size: 24,
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 
@@ -146,24 +189,36 @@ class JobCard extends StatelessWidget {
             Icons.schedule_rounded,
             _formatDate(job.jobPostedAt!),
           ),
+        if (job.jobSalary != null)
+          _buildMetaItem(
+            context,
+            Icons.attach_money_rounded,
+            job.jobSalary!,
+            color: AppTheme.successColor,
+          ),
       ],
     );
   }
 
-  Widget _buildMetaItem(BuildContext context, IconData icon, String text) {
+  Widget _buildMetaItem(
+    BuildContext context, 
+    IconData icon, 
+    String text, {
+    Color? color,
+  }) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(
           icon,
-          color: AppTheme.textTertiary,
+          color: color ?? AppTheme.textTertiary,
           size: 16,
         ),
         const SizedBox(width: 4),
         Text(
           text,
           style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: AppTheme.textSecondary,
+            color: color ?? AppTheme.textSecondary,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -186,12 +241,19 @@ class JobCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
-                Icons.psychology_rounded,
-                color: AppTheme.primaryColor,
-                size: 16,
+              Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: AppTheme.primaryColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Icon(
+                  Icons.psychology_rounded,
+                  color: AppTheme.primaryColor,
+                  size: 14,
+                ),
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: 8),
               Text(
                 'AI Insights',
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
@@ -231,20 +293,52 @@ class JobCard extends StatelessWidget {
             label: const Text('View Details'),
             style: OutlinedButton.styleFrom(
               padding: const EdgeInsets.symmetric(vertical: 12),
+              side: BorderSide(color: AppTheme.primaryColor, width: 1.5),
             ),
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
-          child: ElevatedButton.icon(
-            onPressed: job.jobApplyLink != null
-                ? () => _launchUrl(job.jobApplyLink!)
-                : null,
-            icon: const Icon(Icons.open_in_new_rounded, size: 18),
-            label: const Text('Apply'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppTheme.successColor,
-              padding: const EdgeInsets.symmetric(vertical: 12),
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: job.jobApplyLink != null 
+                  ? AppTheme.successGradient 
+                  : LinearGradient(colors: [Colors.grey.shade400, Colors.grey.shade500]),
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: job.jobApplyLink != null ? [
+                BoxShadow(
+                  color: AppTheme.successColor.withOpacity(0.3),
+                  blurRadius: 8,
+                  offset: const Offset(0, 4),
+                ),
+              ] : null,
+            ),
+            child: ElevatedButton.icon(
+              onPressed: job.jobApplyLink != null
+                  ? () => _launchUrl(job.jobApplyLink!)
+                  : null,
+              icon: Icon(
+                job.jobApplyLink != null 
+                    ? Icons.open_in_new_rounded 
+                    : Icons.link_off_rounded, 
+                size: 18,
+                color: Colors.white,
+              ),
+              label: Text(
+                job.jobApplyLink != null ? 'Apply' : 'No Link',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.transparent,
+                shadowColor: Colors.transparent,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
             ),
           ),
         ),
@@ -288,6 +382,9 @@ class JobCard extends StatelessWidget {
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      // Handle error gracefully
+      debugPrint('Could not launch $url');
     }
   }
 }
