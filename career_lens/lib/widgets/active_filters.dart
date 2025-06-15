@@ -29,7 +29,7 @@ class ActiveFilters extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.filter_list_rounded,
                     color: AppTheme.primaryColor,
                     size: 16,
@@ -47,11 +47,11 @@ class ActiveFilters extends StatelessWidget {
                     onPressed: () {
                       provider.clearSearch();
                     },
-                    child: const Text('Clear All'),
                     style: TextButton.styleFrom(
                       foregroundColor: AppTheme.textSecondary,
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                     ),
+                    child: const Text('Clear All'),
                   ),
                 ],
               ),
@@ -131,7 +131,7 @@ class ActiveFilters extends StatelessWidget {
           const SizedBox(width: 4),
           GestureDetector(
             onTap: onRemove,
-            child: Icon(
+            child: const Icon(
               Icons.close_rounded,
               color: AppTheme.primaryColor,
               size: 16,

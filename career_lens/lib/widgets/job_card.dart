@@ -186,7 +186,7 @@ class JobCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.psychology_rounded,
                 color: AppTheme.primaryColor,
                 size: 16,

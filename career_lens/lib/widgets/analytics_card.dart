@@ -60,7 +60,7 @@ class AnalyticsCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.more_vert_rounded,
                   color: AppTheme.textTertiary,
                   size: 20,
@@ -79,7 +79,7 @@ class AnalyticsCard extends StatelessWidget {
               child: Center(
                 child: Column(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.info_outline_rounded,
                       color: AppTheme.textTertiary,
                       size: 32,

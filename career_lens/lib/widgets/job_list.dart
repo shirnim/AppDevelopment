@@ -82,7 +82,7 @@ class _JobListState extends State<JobList> {
       ),
       child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.list_alt_rounded,
             color: AppTheme.textSecondary,
             size: 20,
@@ -125,7 +125,7 @@ class _JobListState extends State<JobList> {
                 color: AppTheme.errorColor.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.error_outline_rounded,
                 size: 48,
                 color: AppTheme.errorColor,
@@ -170,7 +170,7 @@ class _JobListState extends State<JobList> {
                 color: AppTheme.primaryColor.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.search_rounded,
                 size: 48,
                 color: AppTheme.primaryColor,

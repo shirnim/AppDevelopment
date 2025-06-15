@@ -119,7 +119,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                           child: Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.info_outline_rounded,
                                 color: AppTheme.primaryColor,
                                 size: 18,

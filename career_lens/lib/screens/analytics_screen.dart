@@ -93,7 +93,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                     ),
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.trending_up_rounded,
                           color: AppTheme.successColor,
                           size: 18,
@@ -163,7 +163,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 color: AppTheme.errorColor.withOpacity(0.1),
                 shape: BoxShape.circle,
               ),
-              child: Icon(
+              child: const Icon(
                 Icons.error_outline_rounded,
                 size: 48,
                 color: AppTheme.errorColor,
@@ -305,7 +305,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 ),
               ),
               const Spacer(),
-              Icon(
+              const Icon(
                 Icons.trending_up_rounded,
                 color: AppTheme.successColor,
                 size: 16,
@@ -388,7 +388,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.location_on_outlined,
             color: AppTheme.textTertiary,
             size: 16,

@@ -130,7 +130,7 @@ class JobDetailScreen extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.info_outline_rounded,
                 color: AppTheme.primaryColor,
                 size: 20,
@@ -273,7 +273,7 @@ class JobDetailScreen extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.psychology_rounded,
                 color: AppTheme.primaryColor,
                 size: 24,
@@ -387,7 +387,7 @@ class JobDetailScreen extends StatelessWidget {
                   margin: const EdgeInsets.only(top: 6, right: 12),
                   width: 6,
                   height: 6,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: AppTheme.primaryColor,
                     shape: BoxShape.circle,
                   ),
@@ -423,7 +423,7 @@ class JobDetailScreen extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.description_rounded,
                 color: AppTheme.primaryColor,
                 size: 20,
@@ -481,7 +481,7 @@ class JobDetailScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
+              const Icon(
                 Icons.warning_rounded,
                 color: AppTheme.textTertiary,
               ),

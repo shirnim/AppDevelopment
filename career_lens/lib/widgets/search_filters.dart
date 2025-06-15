@@ -36,7 +36,7 @@ class _SearchFiltersWidgetState extends State<SearchFiltersWidget> {
                   color: AppTheme.primaryColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.tune_rounded,
                   color: AppTheme.primaryColor,
                   size: 18,
