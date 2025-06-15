@@ -90,7 +90,7 @@ class _JobListState extends State<JobList> {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              '${provider.totalJobs} jobs found',
+              '${provider.totalJobs} jobs found (Page ${provider.currentPage})',
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
                 color: AppTheme.textPrimary,

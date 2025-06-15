@@ -21,7 +21,6 @@ class ApiService {
     try {
       final params = filters.toQueryParams();
       params['page'] = page.toString();
-      params['num_pages'] = '1';
 
       // Build search query with location
       String searchQuery = filters.query;
