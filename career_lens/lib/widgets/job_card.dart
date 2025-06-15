@@ -281,6 +281,11 @@ class JobCard extends StatelessWidget {
       }
     } catch (e) {
       return dateString.substring(0, 10);
+      if (dateString.length >= 10) {
+        return dateString.substring(0, 10);
+      } else {
+        return dateString; // Or a default value like 'Invalid Date'
+      }
     }
   }
 

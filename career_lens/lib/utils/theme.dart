@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   // Color Palette
-  static const Color primaryColor = Color(0xFF2563EB);
-  static const Color primaryDark = Color(0xFF1D4ED8);
-  static const Color primaryLight = Color(0xFF3B82F6);
+  static const Color primaryColor = Color(0xFF0A66C2); // LinkedIn Blue
+  static const Color primaryDark = Color(0xFF004182);
   static const Color successColor = Color(0xFF059669);
   static const Color successDark = Color(0xFF047857);
   static const Color warningColor = Color(0xFFF59E0B);
   static const Color errorColor = Color(0xFFDC2626);
-  static const Color backgroundColor = Color(0xFFF8FAFC);
+  static const Color backgroundColor = Color(0xFFF3F2EF); // Light background
   static const Color surfaceColor = Color(0xFFFFFFFF);
   static const Color cardColor = Color(0xFFFFFFFF);
-  static const Color textPrimary = Color(0xFF1E293B);
-  static const Color textSecondary = Color(0xFF64748B);
-  static const Color textTertiary = Color(0xFF94A3B8);
-  static const Color borderColor = Color(0xFFE2E8F0);
+  static const Color textPrimary = Color(0xFF212121); // Dark text
+  static const Color textSecondary = Color(0xFF666666); // Medium text
+  static const Color textTertiary = Color(0xFF888888); // Light text
+  static const Color borderColor = Color(0xFFE1E1E1);
   static const Color dividerColor = Color(0xFFF1F5F9);
-
+  
   // Gradients
   static const LinearGradient primaryGradient = LinearGradient(
     begin: Alignment.topLeft,
@@ -47,19 +46,7 @@ class AppTheme {
       offset: Offset(0, 8),
     ),
   ];
-
-  static const List<BoxShadow> professionalShadow = [
-    BoxShadow(
-      color: Color(0x08000000),
-      blurRadius: 16,
-      offset: Offset(0, 6),
-    ),
-    BoxShadow(
-      color: Color(0x04000000),
-      blurRadius: 4,
-      offset: Offset(0, 2),
-    ),
-  ];
+  
 
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
@@ -76,14 +63,14 @@ class AppTheme {
     // AppBar Theme
     appBarTheme: const AppBarTheme(
       backgroundColor: surfaceColor,
-      foregroundColor: textPrimary,
+      foregroundColor: primaryColor, // LinkedIn blue for icons and text
       elevation: 0,
       scrolledUnderElevation: 1,
       shadowColor: borderColor,
       titleTextStyle: TextStyle(
-        color: textPrimary,
-        fontSize: 20,
-        fontWeight: FontWeight.w600,
+        color: textPrimary, // Dark text for title
+        fontSize: 18, // Slightly smaller title
+        fontWeight: FontWeight.w700, // Bolder title
         fontFamily: 'Inter',
       ),
     ),
@@ -94,9 +81,9 @@ class AppTheme {
       elevation: 0,
       shadowColor: Colors.transparent,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8), // More subtle border radius
         side: const BorderSide(color: borderColor, width: 1),
-      ),
+      ), // Subtle border
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     ),
 
@@ -107,13 +94,13 @@ class AppTheme {
         foregroundColor: Colors.white,
         elevation: 0,
         shadowColor: Colors.transparent,
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12), // Reduced vertical padding
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(4), // Square corners
         ),
         textStyle: const TextStyle(
           fontSize: 16,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w600, // Semibold
           fontFamily: 'Inter',
         ),
       ),
@@ -125,12 +112,12 @@ class AppTheme {
         foregroundColor: primaryColor,
         side: const BorderSide(color: primaryColor, width: 2),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+        shape: RoundedRectangleBorder( // Same style as elevated button
+          borderRadius: BorderRadius.circular(4),
         ),
         textStyle: const TextStyle(
           fontSize: 14,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w600, // Semibold
           fontFamily: 'Inter',
         ),
       ),
@@ -142,7 +129,7 @@ class AppTheme {
         foregroundColor: primaryColor,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(4), // Square corners
         ),
         textStyle: const TextStyle(
           fontSize: 14,
@@ -156,26 +143,26 @@ class AppTheme {
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: const Color(0xFFF8FAFC),
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+      border: OutlineInputBorder( // Subtle border
+        borderRadius: BorderRadius.circular(4),
         borderSide: const BorderSide(color: borderColor, width: 1),
       ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+      enabledBorder: OutlineInputBorder( // Subtle border
+        borderRadius: BorderRadius.circular(4),
         borderSide: const BorderSide(color: borderColor, width: 1),
       ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+      focusedBorder: OutlineInputBorder( // Primary color on focus
+        borderRadius: BorderRadius.circular(4),
         borderSide: const BorderSide(color: primaryColor, width: 2),
       ),
       errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(4), // Error color on error
         borderSide: const BorderSide(color: errorColor, width: 1),
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       hintStyle: const TextStyle(
         color: textTertiary,
-        fontSize: 16,
+        fontSize: 14, // Smaller hint text
         fontWeight: FontWeight.w400,
       ),
     ),
@@ -184,12 +171,12 @@ class AppTheme {
     chipTheme: ChipThemeData(
       backgroundColor: const Color(0xFFF0F9FF),
       labelStyle: const TextStyle(
-        color: primaryColor,
-        fontWeight: FontWeight.w500,
-        fontSize: 12,
+        color: primaryDark, // Darker primary for chip text
+        fontWeight: FontWeight.w600, // Semibold
+        fontSize: 12, // Slightly smaller
       ),
-      side: const BorderSide(color: Color(0xFFBAE6FD)),
       shape: RoundedRectangleBorder(
+        // Rounded pill shape
         borderRadius: BorderRadius.circular(20),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -200,7 +187,7 @@ class AppTheme {
       backgroundColor: surfaceColor,
       selectedItemColor: primaryColor,
       unselectedItemColor: textTertiary,
-      type: BottomNavigationBarType.fixed,
+      type: BottomNavigationBarType.fixed, // Fixed type
       elevation: 8,
       selectedLabelStyle: TextStyle(
         fontSize: 12,
@@ -216,15 +203,16 @@ class AppTheme {
 
     // Text Theme
     textTheme: const TextTheme(
+      // Display styles (less common in typical app UIs)
       displayLarge: TextStyle(
         fontSize: 32,
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.w700, // Bold
         color: textPrimary,
         height: 1.2,
         fontFamily: 'Inter',
       ),
       displayMedium: TextStyle(
-        fontSize: 28,
+        fontSize: 28, // Bold
         fontWeight: FontWeight.w700,
         color: textPrimary,
         height: 1.2,
@@ -232,50 +220,56 @@ class AppTheme {
       ),
       displaySmall: TextStyle(
         fontSize: 24,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w700, // Bold
         color: textPrimary,
         height: 1.3,
         fontFamily: 'Inter',
       ),
+      
+      // Headline styles (for main titles and sections)
       headlineLarge: TextStyle(
         fontSize: 22,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w700, // Bold
         color: textPrimary,
         height: 1.3,
         fontFamily: 'Inter',
       ),
       headlineMedium: TextStyle(
         fontSize: 20,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w700, // Bold
         color: textPrimary,
         height: 1.3,
         fontFamily: 'Inter',
       ),
       headlineSmall: TextStyle(
         fontSize: 18,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w700, // Bold
         color: textPrimary,
         height: 1.3,
         fontFamily: 'Inter',
       ),
+      
+      // Title styles (for subtitles and card titles)
       titleLarge: TextStyle(
         fontSize: 16,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w600, // Semibold
         color: textPrimary,
         fontFamily: 'Inter',
       ),
       titleMedium: TextStyle(
         fontSize: 14,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w600, // Semibold
         color: textPrimary,
         fontFamily: 'Inter',
       ),
       titleSmall: TextStyle(
         fontSize: 12,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w600, // Semibold
         color: textPrimary,
         fontFamily: 'Inter',
       ),
+      
+      // Body styles (for paragraph text)
       bodyLarge: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w400,
@@ -297,6 +291,7 @@ class AppTheme {
         height: 1.5,
         fontFamily: 'Inter',
       ),
+      // Label styles (for small labels and captions)
       labelLarge: TextStyle(
         fontSize: 14,
         fontWeight: FontWeight.w500,
@@ -319,7 +314,7 @@ class AppTheme {
 
     // Icon Theme
     iconTheme: const IconThemeData(
-      color: textSecondary,
+      color: textSecondary, // Use secondary text color for icons
       size: 24,
     ),
 
@@ -330,7 +325,7 @@ class AppTheme {
       space: 1,
     ),
 
-    fontFamily: 'Inter',
+    fontFamily: 'Inter', // Using Inter as a clean, modern sans-serif font
   );
 
   static ThemeData darkTheme = ThemeData(
